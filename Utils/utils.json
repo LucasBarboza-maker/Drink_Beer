@@ -1,0 +1,9 @@
+{
+    "main_color":"#d91919",
+    "bellow_circle_color":"white",
+    "font_tab_color_active":"black",
+    "font_tab_color_inactive":"#a0a0a0",
+    "talk_bubble_color":"#f7f2f2",
+    "tabbar_background_color":"white",
+    "card_background":"#e1e0e0"
+}
