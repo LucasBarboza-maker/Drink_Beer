@@ -21,6 +21,7 @@ const App = () => {
     <SafeAreaView style={styles.container}>
       <View style={{ height: StatusBar.currentHeight, backgroundColor:Utils.main_color }}>
         <ExpoStatusBar style="light" backgroundColor={Utils.main_color}/>
+        <StatusBar></StatusBar>
       </View>
       <NavigationContainer>
         <Tab.Navigator tabBarOptions={{

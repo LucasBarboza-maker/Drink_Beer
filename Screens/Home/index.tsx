@@ -10,6 +10,7 @@ import {
 } from "react-native-chart-kit";
 import Utils from '../../Utils/utils.json';
 
+var oi = 1;
 const screenWidth = Dimensions.get("window").width;
 
 const chartConfig = {
@@ -23,22 +24,19 @@ const chartConfig = {
   useShadowColorFromDataset: false // optional
 };
 
-function card(){
-
-}
-
 export default function Home() {
+
   const data = {
     data: [0.5]
   };
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
-        <View style={styles.topContainer}>
+        
           <View style={styles.talkBallonBody}>
             <Text style={styles.phraseMotivational}>Bebeu? Hora de gastar a onda</Text>
           </View>    
-        </View>
+        
       </View>
       <View style={styles.middleContainer}>
               <ProgressChart
@@ -61,7 +59,6 @@ export default function Home() {
       </View>
       <View style={styles.bottomContainer}>
       <ScrollView style={{ flex: 1}}>
-
         <View style={styles.cardBody}>
           <View style={{width:10, height:10, backgroundColor:'white', borderRadius:10/2}}></View>
           <View>
@@ -103,7 +100,8 @@ const styles = StyleSheet.create({
     width:'100%',
     display: 'flex',
     justifyContent: 'center',
-    alignItems:'center'
+    alignItems:'center',
+    
   },
   middleContainer:{
     height:'30%',
@@ -136,7 +134,6 @@ const styles = StyleSheet.create({
   },
   bottomContainer:{
     display:'flex',
-    alignItems:'center',
     height:'30%',
     maxHeight:'30%',
     width:'90%',
@@ -149,11 +146,13 @@ const styles = StyleSheet.create({
   },
   cardBody:{
     height:70,
-    width:'90%',
+    width:'100%',
     justifyContent: 'space-between',
     flexDirection:'row',
     alignItems: 'center',
     padding:10,
+    borderBottomColor: Utils.border_bottom_cards,
+    borderBottomWidth: 1,
     
   },
   announcementContainer:{
@@ -163,11 +162,16 @@ const styles = StyleSheet.create({
   },
   talkBallonBody:{
     width:'90%',
-    height: '300%',
+    height: '90%',
     backgroundColor: Utils.talk_bubble_color,
     borderStyle:'solid',
     justifyContent: 'center',
-    borderRadius:20
+    borderRadius:20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,  
+    elevation: 5
   },
   talkArrowTriangle: {
     display:'flex',
