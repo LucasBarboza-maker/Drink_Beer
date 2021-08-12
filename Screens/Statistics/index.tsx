@@ -3,11 +3,8 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {
   LineChart,
-  BarChart,
-  PieChart,
   ProgressChart,
-  ContributionGraph,
-  StackedBarChart
+
 } from "react-native-chart-kit";
 
 import { Dimensions } from "react-native";
@@ -28,46 +25,21 @@ const chartConfig = {
 export default function Statistics() {
 
   const dataLine = {
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels: ["Janeiro 1º", "Janeiro 2°", "Janeiro 3°", "Janeiro 4°", "Fevereiro 1ª"],
     datasets: [
       {
-        data: [20, 45, 28, 80, 99, 43],
-        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-        strokeWidth: 2 // optional
+        data: [20, 15, 13, 25, 13],
+        color: (opacity = 1) => `rgba(254, 30, 30, ${opacity})`, // optional
+        strokeWidth: 4 // optional
       }
     ],
-    legend: ["Consumo Mensal"] // optional
+    legend: ["Litroes por Semana"] // optional
   };
 
   const dataProgress = {
     labels: ["Manha", "Tarde", "Noite"], // optional
     data: [0.4, 0.6, 0.8]
   };
-
-
-  const dataMonth = {
-    labels: ["January", "February", "March", "April", "May", "June"],
-    datasets: [
-      {
-        data: [20, 45, 28, 80, 99, 43]
-      }
-    ]
-  };
-
-  const commitsData = [
-    { date: "2017-01-02", count: 1 },
-    { date: "2017-01-03", count: 2 },
-    { date: "2017-01-04", count: 3 },
-    { date: "2017-01-05", count: 4 },
-    { date: "2017-01-06", count: 5 },
-    { date: "2017-01-30", count: 2 },
-    { date: "2017-01-31", count: 3 },
-    { date: "2017-03-01", count: 2 },
-    { date: "2017-04-02", count: 4 },
-    { date: "2017-03-05", count: 2 },
-    { date: "2017-02-30", count: 4 },
-    { date: "2017-06-10", count: 9 }
-  ];
 
   
   return (
