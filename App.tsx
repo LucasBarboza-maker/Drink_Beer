@@ -14,8 +14,6 @@ const Tab = createMaterialTopTabNavigator();
 
 const App = () => {
   
-  useEffect(() => {
-  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
