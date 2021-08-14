@@ -6,10 +6,13 @@ import { StyleSheet, Text, View, ScrollView} from 'react-native';
 export default function Home() {
   return (
     <View style={styles.container}>
-       <ScrollView style={{ flex: 1, width:'100%'}}>
+       <ScrollView style={{width:'100%'}}>
+          <View style={styles.configTitle}>
+             <Text style={{fontSize:18, padding:8, paddingBottom:15, paddingTop:15, fontWeight: 'bold', borderBottomColor: Utils.border_bottom_cards,borderBottomWidth: 1  }}>Configuração do lembrete</Text>
+          </View>
           <View style={styles.cardBody}>
             <View>
-             <Text style={{fontSize:18}}>Horarios do lembrete</Text>
+             <Text style={{fontSize:18, padding:5, color:'gray'}}>Horarios do lembrete</Text>
             </View>
           </View>
         </ScrollView>
@@ -25,13 +28,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  configTitle: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+  },
   topContainer: {
     height:'20%',
     width:'100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems:'center',
-    
   },
   middleContainer:{
     height:'30%',
