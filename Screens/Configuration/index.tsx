@@ -1,20 +1,35 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import Utils from '../../Utils/utils.json';
-import { StyleSheet, Text, View, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Pressable} from 'react-native';
+
+function card(texto: string){
+  return(
+  <Pressable style={styles.cardBody} onPress={() => {console.log('oi')}}>
+            <Text style={{fontSize:18, padding:5, color:'black'}}>{texto}</Text>
+  </Pressable>);
+}
+
+function cardTitle(text: string) {
+  return(
+  <View style={styles.configTitle}>
+    <Text style={{fontSize:18, padding:8, color:'gray', paddingBottom:15, paddingTop:15, fontWeight: 'bold', borderBottomColor: Utils.border_bottom_cards,borderBottomWidth: 1  }}>{text}</Text>
+  </View>);
+}
 
 export default function Home() {
   return (
     <View style={styles.container}>
        <ScrollView style={{width:'100%'}}>
-          <View style={styles.configTitle}>
-             <Text style={{fontSize:18, padding:8, paddingBottom:15, paddingTop:15, fontWeight: 'bold', borderBottomColor: Utils.border_bottom_cards,borderBottomWidth: 1  }}>Configuração do lembrete</Text>
-          </View>
-          <View style={styles.cardBody}>
-            <View>
-             <Text style={{fontSize:18, padding:5, color:'gray'}}>Horarios do lembrete</Text>
-            </View>
-          </View>
+          {cardTitle('Geral')}
+          {card('Idioma')}
+          {card('Compartilhar')}
+          {card('Parar comentários')}
+          {card('Comentários')}
+          {cardTitle('Lembrete')}
+          {card('Horários do lembrete')}
+          {card('Som do lembrete')}
+          {card('Remover Anuncios')}
         </ScrollView>
       <StatusBar style="auto" />
     </View>
@@ -22,6 +37,15 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: 'black',
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
