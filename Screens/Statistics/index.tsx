@@ -45,7 +45,7 @@ export default function Statistics() {
   return (
     <View style={styles.container}>
 
-      
+    <Text style={{fontSize:20}}>Consumo diário</Text>
     <ProgressChart
       data={dataProgress}
       width={screenWidth}
@@ -56,6 +56,7 @@ export default function Statistics() {
       hideLegend={false}
     />
 
+<Text style={{fontSize:20}}>Consumo Mensal</Text>
       <StatusBar style="auto" />
       <LineChart
         data={dataLine}
@@ -72,6 +73,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
 });
