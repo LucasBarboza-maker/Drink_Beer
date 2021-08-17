@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
+import { useState } from 'react';
 import Utils from '../../Utils/utils.json';
-import { StyleSheet, Text, View, ScrollView, Pressable} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Pressable, Modal, Alert} from 'react-native';
 
-function card(texto: string){
+function card(texto: string, callModal: Function){
   return(
-  <Pressable style={styles.cardBody} onPress={() => {console.log('oi')}}>
+  <Pressable style={styles.cardBody} onPress={() => (console.log("Clicou"))}>
+            {callModal()}
             <Text style={{fontSize:18, padding:5, color:'black'}}>{texto}</Text>
   </Pressable>);
 }
@@ -17,19 +19,43 @@ function cardTitle(text: string) {
   </View>);
 }
 
+
+
 export default function Home() {
+  function callModal(){
+    return(<Modal
+    animationType="slide"
+    transparent={true}
+    visible={true}
+    onRequestClose={() => {
+      Alert.alert("Modal has been closed.");
+    }}
+  >
+    <View style={styles.centeredView}>
+      <View style={styles.modalView}>
+        <Text style={styles.modalText}>Hello World!</Text>
+        <Pressable
+          style={[styles.buttonModal, styles.buttonClose]}
+        >
+          <Text style={styles.textStyle}>Hide Modal</Text>
+        </Pressable>
+      </View>
+    </View>
+  </Modal>);
+  }
   return (
     <View style={styles.container}>
+        
        <ScrollView style={{width:'100%'}}>
           {cardTitle('Geral')}
-          {card('Idioma')}
-          {card('Compartilhar')}
-          {card('Parar comentários')}
-          {card('Comentários')}
+          {card('Idioma', callModal)}
+          {/* {card('Compartilhar',callModal)}
+          {card('Parar comentários',callModal)}
+          {card('Comentários',callModal)}
           {cardTitle('Lembrete')}
-          {card('Horários do lembrete')}
-          {card('Som do lembrete')}
-          {card('Remover Anuncios')}
+          {card('Horários do lembrete',callModal)}
+          {card('Som do lembrete',callModal)}
+          {card('Remover Anuncios',callModal)} */}
         </ScrollView>
       <StatusBar style="auto" />
     </View>
@@ -178,7 +204,46 @@ const styles = StyleSheet.create({
     fontSize:35,
     color:'green',
     padding:0,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  buttonModal: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
   }
-
 });
-
