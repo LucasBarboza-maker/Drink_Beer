@@ -3,15 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import Utils from '../../Utils/utils.json';
 import { StyleSheet, Text, View, ScrollView, Pressable, Modal, Alert} from 'react-native';
-
-function card(texto: string, callModal: Function){
-  var ativado = false;
-  return(
-  <Pressable style={styles.cardBody} onPress={() => {ativado = true}}>
-            {callModal(ativado)}
-            <Text style={{fontSize:18, padding:5, color:'black'}}>{texto}</Text>
-  </Pressable>);
-}
+import ModalIdioma from '../Modals/ModalIdioma';
 
 function cardTitle(text: string) {
   return(
@@ -24,35 +16,25 @@ function cardTitle(text: string) {
 
 export default function Home() {
 
-  function callModal(ativado: boolean) {
-    console.log(ativado);
-    return(<Modal
-    animationType="slide"
-    transparent={true}
-    visible={ativado}
-    onRequestClose={() => {
-      Alert.alert("Modal has been closed.");
-    }}
-  >
-    <View style={styles.centeredView}>
-      <View style={styles.modalView}>
-        <Text style={styles.modalText}>Hello World!</Text>
-        <Pressable
-          style={[styles.buttonModal, styles.buttonClose]}
-        >
-          <Text style={styles.textStyle}>Hide Modal</Text>
-        </Pressable>
-      </View>
-    </View>
-  </Modal>);
+  const [currentModal, setCurrentModal] = useState({});
+  const [ActiveModal, setActiveModal] = useState(false);
+
+  function card(texto: string){
+    var ativado = false;
+    return(
+    <Pressable style={styles.cardBody} onPress={() => {setActiveModal(true);}}>
+              <Text style={{fontSize:18, padding:5, color:'black'}}>{texto}</Text>
+    </Pressable>);
   }
+
+
 
   return (
     <View style={styles.container}>
         
        <ScrollView style={{width:'100%'}}>
           {cardTitle('Geral')}
-          {card('Idioma', callModal)}
+          {card('Idioma')}
           {/* {card('Compartilhar',callModal)}
           {card('Parar comentários',callModal)}
           {card('Comentários',callModal)}
