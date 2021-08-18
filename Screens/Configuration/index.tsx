@@ -3,7 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import Utils from '../../Utils/utils.json';
 import { StyleSheet, Text, View, ScrollView, Pressable, Modal, Alert} from 'react-native';
-import ModalIdioma from '../Modals/ModalIdioma';
+import CardIdioma from '../Components/ConfigurationCards/ModalIdioma';
 
 function cardTitle(text: string) {
   return(
@@ -20,7 +20,6 @@ export default function Home() {
   const [ActiveModal, setActiveModal] = useState(false);
 
   function card(texto: string){
-    var ativado = false;
     return(
     <Pressable style={styles.cardBody} onPress={() => {setActiveModal(true);}}>
               <Text style={{fontSize:18, padding:5, color:'black'}}>{texto}</Text>
@@ -34,7 +33,7 @@ export default function Home() {
         
        <ScrollView style={{width:'100%'}}>
           {cardTitle('Geral')}
-          {card('Idioma')}
+          <CardIdioma></CardIdioma>
           {/* {card('Compartilhar',callModal)}
           {card('Parar comentários',callModal)}
           {card('Comentários',callModal)}
