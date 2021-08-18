@@ -5,9 +5,10 @@ import Utils from '../../Utils/utils.json';
 import { StyleSheet, Text, View, ScrollView, Pressable, Modal, Alert} from 'react-native';
 
 function card(texto: string, callModal: Function){
+  var ativado = false;
   return(
-  <Pressable style={styles.cardBody} onPress={() => (console.log("Clicou"))}>
-            {callModal()}
+  <Pressable style={styles.cardBody} onPress={() => {ativado = true}}>
+            {callModal(ativado)}
             <Text style={{fontSize:18, padding:5, color:'black'}}>{texto}</Text>
   </Pressable>);
 }
@@ -22,11 +23,13 @@ function cardTitle(text: string) {
 
 
 export default function Home() {
-  function callModal(){
+
+  function callModal(ativado: boolean) {
+    console.log(ativado);
     return(<Modal
     animationType="slide"
     transparent={true}
-    visible={true}
+    visible={ativado}
     onRequestClose={() => {
       Alert.alert("Modal has been closed.");
     }}
@@ -43,6 +46,7 @@ export default function Home() {
     </View>
   </Modal>);
   }
+
   return (
     <View style={styles.container}>
         
