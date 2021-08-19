@@ -13,7 +13,7 @@ import CardRemoveAnnouncements from '../Components/ConfigurationCards/CardRemove
 function cardTitle(text: string) {
   return(
   <View style={styles.configTitle}>
-    <Text style={{fontSize:22, padding:8, color:'gray', paddingBottom:15, paddingTop:15, fontWeight: 'bold', borderBottomColor: Utils.border_bottom_cards,borderBottomWidth: 1  }}>{text}</Text>
+    <Text style={{fontSize:22, padding:8, color:'gray', paddingBottom:15, paddingTop:15, fontWeight: 'bold', borderColor: Utils.border_bottom_cards,borderBottomWidth: 1, borderTopWidth: 1 }}>{text}</Text>
   </View>);
 }
 
@@ -127,9 +127,7 @@ const styles = StyleSheet.create({
     width:'100%',
     flexDirection:'row',
     alignItems: 'center',
-    padding: 10,
-    borderBottomColor: Utils.border_bottom_cards,
-    borderBottomWidth: 1    
+    padding: 10,   
   },
   announcementContainer:{
     height:'10%',

@@ -38,9 +38,7 @@ const CardReminderHours = props => {
       width:'100%',
       flexDirection:'row',
       alignItems: 'center',
-      padding: 10,
-      borderBottomColor: Utils.border_bottom_cards,
-      borderBottomWidth: 1    
+      padding: 10, 
     }, 
     modalView: {
       margin: 20,
