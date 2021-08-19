@@ -5,7 +5,10 @@ import Utils from '../../Utils/utils.json';
 import { StyleSheet, Text, View, ScrollView, Pressable, Modal, Alert} from 'react-native';
 import CardIdioma from '../Components/ConfigurationCards/CardLanguage';
 import CardShare from '../Components/ConfigurationCards/CardShare';
-
+import CardComments from '../Components/ConfigurationCards/CardComments';
+import CardReminderHours from '../Components/ConfigurationCards/CardReminderHours';
+import CardReminderSounds from '../Components/ConfigurationCards/CardReminderSounds';
+import CardRemoveAnnouncements from '../Components/ConfigurationCards/CardRemoveAnnouncements';
 
 function cardTitle(text: string) {
   return(
@@ -35,15 +38,15 @@ export default function Home() {
         
        <ScrollView style={{width:'100%'}}>
           {cardTitle('Geral')}
-          <CardIdioma></CardIdioma>
-          <CardShare></CardShare>
-          {/* {card('Compartilhar',callModal)}
-          {card('Parar comentários',callModal)}
-          {card('Comentários',callModal)}
+            <CardIdioma/>
+            <CardComments/>
           {cardTitle('Lembrete')}
-          {card('Horários do lembrete',callModal)}
-          {card('Som do lembrete',callModal)}
-          {card('Remover Anuncios',callModal)} */}
+            <CardReminderHours/>
+            <CardReminderSounds/>
+          {cardTitle('Social')}
+            <CardShare/>
+          {cardTitle('Outros')}
+            <CardRemoveAnnouncements/>
         </ScrollView>
       <StatusBar style="auto" />
     </View>
