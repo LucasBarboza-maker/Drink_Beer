@@ -3,7 +3,9 @@ import React from 'react';
 import { useState } from 'react';
 import Utils from '../../Utils/utils.json';
 import { StyleSheet, Text, View, ScrollView, Pressable, Modal, Alert} from 'react-native';
-import CardIdioma from '../Components/ConfigurationCards/ModalIdioma';
+import CardIdioma from '../Components/ConfigurationCards/CardLanguage';
+import CardShare from '../Components/ConfigurationCards/CardShare';
+
 
 function cardTitle(text: string) {
   return(
@@ -34,6 +36,7 @@ export default function Home() {
        <ScrollView style={{width:'100%'}}>
           {cardTitle('Geral')}
           <CardIdioma></CardIdioma>
+          <CardShare></CardShare>
           {/* {card('Compartilhar',callModal)}
           {card('Parar comentários',callModal)}
           {card('Comentários',callModal)}

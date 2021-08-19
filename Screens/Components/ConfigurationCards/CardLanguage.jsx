@@ -3,11 +3,11 @@ import { useState } from 'react';
 import Utils from '../../../Utils/utils.json';
 import { StyleSheet, Text, View, ScrollView, Pressable, Modal, Alert} from 'react-native';
 
-const CardIdioma = props => {
+const CardLanguage = props => {
 
     const [openModal, setOpenModal] = useState(false);
     return(
-      <Pressable style={styles.cardBody} onPress={() => {setOpenModal(true);}}>
+      <Pressable style={styles.cardBody} onPress={() => {setOpenModal(!openModal);}}>
               <Text style={{fontSize:18, padding:5, color:'black'}}>Idioma</Text>
           <Modal
           animationType="slide"
@@ -22,6 +22,7 @@ const CardIdioma = props => {
               <Text style={styles.modalText}>Hello World!</Text>
               <Pressable
                 style={[styles.buttonModal, styles.buttonClose]}
+                onPress={() => {setOpenModal(!openModal);}}
               >
                 <Text style={styles.textStyle}>Hide Modal</Text>
               </Pressable>
@@ -32,7 +33,15 @@ const CardIdioma = props => {
   }
 
   const styles = StyleSheet.create({
-  
+    cardBody:{
+      height:60,
+      width:'100%',
+      flexDirection:'row',
+      alignItems: 'center',
+      padding: 10,
+      borderBottomColor: Utils.border_bottom_cards,
+      borderBottomWidth: 1    
+    },  
     modalView: {
       margin: 20,
       backgroundColor: "white",
@@ -70,4 +79,4 @@ const CardIdioma = props => {
     }
   });
 
-  export default CardIdioma;
+  export default CardLanguage;
