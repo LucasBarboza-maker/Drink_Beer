@@ -5,7 +5,21 @@ import { StyleSheet, Text, View, ScrollView, Pressable, Modal, Alert} from 'reac
 
 const CardComments = props => {
 
+    const [messages, setMessages] = useState([{key:1,comment:"Beba o suficiente para se arrepender"}, {key:2, comment:"Beber é melhor quando você não lembra que bebeu"}])
     const [openModal, setOpenModal] = useState(false);
+
+    function messagesJSX(textObject){
+      return(
+        <Pressable
+        key={textObject.key}
+        style={[styles.buttonModal, styles.buttonClose]}
+        onPress={() => {setOpenModal(!openModal);}}
+      >
+        <Text style={styles.textStyle}>{textObject.comment}</Text>
+      </Pressable>
+      );
+    }
+
     return(
       <Pressable style={styles.cardBody} onPress={() => {setOpenModal(!openModal);}}>
               <Text style={{fontSize:18, padding:5, color:'black'}}>Comentarios</Text>
@@ -17,29 +31,25 @@ const CardComments = props => {
             setOpenModal(false);
           }}
         >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>Hello World!</Text>
-              <Pressable
-                style={[styles.buttonModal, styles.buttonClose]}
-                onPress={() => {setOpenModal(!openModal);}}
-              >
-                <Text style={styles.textStyle}>Compartilhar Modal</Text>
-              </Pressable>
+            <View style={styles.centeredView}>
+            <View>
+              <Text style={styles.modalText}>Comentários</Text>
+              {messages.map((e) => {
+                return messagesJSX(e);
+              })}
             </View>
           </View>
         </Modal>
       </Pressable>);
   }
-
   const styles = StyleSheet.create({
     cardBody:{
       height:60,
       width:'100%',
       flexDirection:'row',
       alignItems: 'center',
-      padding: 10,
-    }, 
+      padding: 10, 
+    },  
     modalView: {
       margin: 20,
       backgroundColor: "white",
@@ -56,25 +66,26 @@ const CardComments = props => {
       elevation: 5
     },
     buttonModal: {
-      borderRadius: 20,
-      padding: 10,
+      marginTop:7,
+      padding: 15,
       elevation: 2
     },
     buttonOpen: {
       backgroundColor: "#F194FF",
     },
     buttonClose: {
-      backgroundColor: "#2196F3",
+      backgroundColor: "white",
     },
     textStyle: {
-      color: "white",
-      fontWeight: "bold",
+      fontSize:16,
+      color: "black",
       textAlign: "center"
     },
     modalText: {
+      marginTop:10,
+      fontSize:25,
       marginBottom: 15,
       textAlign: "center"
     }
   });
-
   export default CardComments;

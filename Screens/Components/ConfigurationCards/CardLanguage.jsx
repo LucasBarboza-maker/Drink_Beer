@@ -18,13 +18,19 @@ const CardLanguage = props => {
           }}
         >
           <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>Hello World!</Text>
+            <View>
+              <Text style={styles.modalText}>Idiomas</Text>
               <Pressable
                 style={[styles.buttonModal, styles.buttonClose]}
                 onPress={() => {setOpenModal(!openModal);}}
               >
-                <Text style={styles.textStyle}>Hide Modal</Text>
+                <Text style={styles.textStyle}>Portugues</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.buttonModal, styles.buttonClose]}
+                onPress={() => {setOpenModal(!openModal);}}
+              >
+                <Text style={styles.textStyle}>Inglês</Text>
               </Pressable>
             </View>
           </View>
@@ -56,22 +62,24 @@ const CardLanguage = props => {
       elevation: 5
     },
     buttonModal: {
-      borderRadius: 20,
-      padding: 10,
+      marginTop:7,
+      padding: 15,
       elevation: 2
     },
     buttonOpen: {
       backgroundColor: "#F194FF",
     },
     buttonClose: {
-      backgroundColor: "#2196F3",
+      backgroundColor: "white",
     },
     textStyle: {
-      color: "white",
-      fontWeight: "bold",
+      fontSize:16,
+      color: "black",
       textAlign: "center"
     },
     modalText: {
+      marginTop:10,
+      fontSize:25,
       marginBottom: 15,
       textAlign: "center"
     }
