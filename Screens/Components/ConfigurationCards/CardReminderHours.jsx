@@ -5,7 +5,21 @@ import { StyleSheet, Text, View, ScrollView, Pressable, Modal, Alert} from 'reac
 
 const CardReminderHours = props => {
 
+    const [hours, setHours] = useState([{key:1, hour:"19:30hrs"}, {key:2, hour:"20:00hrs"}])
     const [openModal, setOpenModal] = useState(false);
+
+    function hoursJSX(hourObject, index){
+      return(
+        <Pressable
+          key={hourObject.key}
+          style={[styles.buttonModal, styles.buttonClose]}
+          onPress={() => {setOpenModal(!openModal);}}
+        >
+          <Text style={styles.textStyle}>Horário{index+1}</Text>
+          <Text style={styles.textStyle}>{hourObject.hour}</Text>
+        </Pressable>
+        );
+      }
     return(
       <Pressable style={styles.cardBody} onPress={() => {setOpenModal(!openModal);}}>
               <Text style={{fontSize:18, padding:5, color:'black'}}>Horário dos Lembretes</Text>
@@ -19,13 +33,10 @@ const CardReminderHours = props => {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>Hello World!</Text>
-              <Pressable
-                style={[styles.buttonModal, styles.buttonClose]}
-                onPress={() => {setOpenModal(!openModal);}}
-              >
-                <Text style={styles.textStyle}>Compartilhar Modal</Text>
-              </Pressable>
+              <Text style={styles.modalText}>Horários dos Lembretes</Text>
+              {hours.map((e, index) => {
+                return hoursJSX(e, index);
+              })}
             </View>
           </View>
         </Modal>
@@ -39,12 +50,10 @@ const CardReminderHours = props => {
       flexDirection:'row',
       alignItems: 'center',
       padding: 10, 
-    }, 
+    },  
     modalView: {
-      margin: 20,
       backgroundColor: "white",
-      borderRadius: 20,
-      padding: 35,
+      padding: 10,
       alignItems: "center",
       shadowColor: "#000",
       shadowOffset: {
@@ -53,28 +62,32 @@ const CardReminderHours = props => {
       },
       shadowOpacity: 0.25,
       shadowRadius: 4,
-      elevation: 5
     },
     buttonModal: {
-      borderRadius: 20,
-      padding: 10,
-      elevation: 2
+      marginTop:7,
+      padding: 15,
+      elevation: 2,
+      display:'flex',
+      justifyContent: 'space-between',
+      width: '100%',
+      flexDirection: 'row'
     },
     buttonOpen: {
       backgroundColor: "#F194FF",
     },
     buttonClose: {
-      backgroundColor: "#2196F3",
+      backgroundColor: "white",
     },
     textStyle: {
-      color: "white",
-      fontWeight: "bold",
+      fontSize:16,
+      color: "black",
       textAlign: "center"
     },
     modalText: {
+      marginTop:10,
+      fontSize:25,
       marginBottom: 15,
       textAlign: "center"
     }
   });
-
   export default CardReminderHours;
