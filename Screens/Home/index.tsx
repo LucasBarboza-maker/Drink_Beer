@@ -28,7 +28,7 @@ const chartConfig = {
 export default function Home() {
   
   const [data, setData] = useState([1]);
-  const [quantityOfCups, setQuantityOfCups] = useState([{hour:"18:20Hrs", messageToDrink:"Não Esquece", ml:"300ml"},{hour:"18:20Hrs", messageToDrink:"Não Esquece", ml:"300ml"}])
+  const [quantityOfCups, setQuantityOfCups] = useState([{radiusColor:'green',hour:"18:20Hrs", messageToDrink:"Não Esquece", ml:"300ml"},{radiusColor:'white',hour:"18:20Hrs", messageToDrink:"Não Esquece", ml:"300ml"}])
 
   function currentDateFormatToCard(){
     let date = new Date();
@@ -44,13 +44,15 @@ export default function Home() {
     }else{
       setData([data[0]+quantity])
     }
-
-    setQuantityOfCups([...quantityOfCups,{hour:currentDateFormatToCard(), messageToDrink:"Não Esquece", ml:"300ml"}])
+    quantityOfCups.map(e => {
+     return e.radiusColor = 'white';
+    })
+    setQuantityOfCups([{radiusColor:'green',hour:currentDateFormatToCard(), messageToDrink:"Não Esquece", ml:"300ml"},...quantityOfCups])
   }
 
   function addCard(info: any, index: number){
     return(<View style={styles.cardBody}  key={index}>
-            <View style={{width:10, height:10, backgroundColor:'white', borderRadius:10/2}}></View>
+            <View style={{width:10, height:10, backgroundColor:info.radiusColor, borderRadius:10/2}}></View>
             <View>
               <Text style={styles.textoCard}>{info.hour}</Text>
               <Text style={styles.subTextoCard}>{info.messageToDrink}</Text>
