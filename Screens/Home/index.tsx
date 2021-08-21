@@ -30,6 +30,12 @@ export default function Home() {
   const [data, setData] = useState([1]);
   const [quantityOfCups, setQuantityOfCups] = useState([{hour:"18:20Hrs", messageToDrink:"Não Esquece", ml:"300ml"},{hour:"18:20Hrs", messageToDrink:"Não Esquece", ml:"300ml"}])
 
+  function currentDateFormatToCard(){
+    let date = new Date();
+    let formattedDate = date.getHours()+":"+date.getMinutes()+"Hrs";
+    return formattedDate;
+  }
+
   function addML(quantity: number){
     let afterQuantity = data[0] + quantity;
     if(afterQuantity > 1 ){
@@ -38,6 +44,8 @@ export default function Home() {
     }else{
       setData([data[0]+quantity])
     }
+
+    setQuantityOfCups([...quantityOfCups,{hour:currentDateFormatToCard(), messageToDrink:"Não Esquece", ml:"300ml"}])
   }
 
   function addCard(info: any, index: number){
