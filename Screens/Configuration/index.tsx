@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import LoadNotifications from '../Notification/LoadNotifications';
 import Utils from '../../Utils/utils.json';
 import { StyleSheet, Text, View, ScrollView, Pressable, Modal, Alert} from 'react-native';
 import CardIdioma from '../Components/ConfigurationCards/CardLanguage';
@@ -24,14 +25,16 @@ export default function Home() {
   const [currentModal, setCurrentModal] = useState({});
   const [ActiveModal, setActiveModal] = useState(false);
 
+  useEffect(() => {
+    LoadNotifications();
+  }, [])
+
   function card(texto: string){
     return(
     <Pressable style={styles.cardBody} onPress={() => {setActiveModal(true);}}>
               <Text style={{fontSize:18, padding:5, color:'black'}}>{texto}</Text>
     </Pressable>);
   }
-
-
 
   return (
     <View style={styles.container}>
