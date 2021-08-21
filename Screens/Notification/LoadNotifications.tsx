@@ -3,10 +3,8 @@ import * as Notification from 'expo-notifications';
 import Notifications from '../GlobalInfos/Notifications.json';
 
 function LoadNotifications(){
-
+    Notification.cancelAllScheduledNotificationsAsync();
     Notifications.map((e) =>{
-        console.log("Notificado:"+ e.h);
-
         Notification.scheduleNotificationAsync({
             content:{
               title:"Local Notification",

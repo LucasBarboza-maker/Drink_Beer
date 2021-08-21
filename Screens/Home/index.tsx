@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Dimensions, ScrollView} from 'react-native';
+import {useState} from 'react';
+import { StyleSheet, Text, View, Image, Dimensions, ScrollView, Pressable} from 'react-native';
 import {
   LineChart,
   BarChart,
@@ -25,10 +26,10 @@ const chartConfig = {
 };
 
 export default function Home() {
+  
+  const [data, setData] = useState([1]);
 
-  const data = {
-    data: [0.5]
-  };
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -51,10 +52,10 @@ export default function Home() {
             />
         <View style={styles.middleCircle}>
           <Image source={require('../../Images/glasses/default_beer.png')} style={{width:'45%', height:'45%', resizeMode:'contain'}}/>
-          <View style={styles.bellowMiddleCircle}>
+          <Pressable style={styles.bellowMiddleCircle} onPress={() => {setData([data[0]+0.3])}}>
             <Text style={styles.textoML}>300ML</Text>
             <Text style={styles.textoPlus}>+</Text>
-          </View>
+          </Pressable>
         </View>
       </View>
       <View style={styles.bottomContainer}>
