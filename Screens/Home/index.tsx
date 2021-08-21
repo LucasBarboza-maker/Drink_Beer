@@ -28,6 +28,7 @@ const chartConfig = {
 export default function Home() {
   
   const [data, setData] = useState([1]);
+  const [quantityOfCups, setQuantityOfCups] = useState([{hour:"18:20Hrs", messageToDrink:"Não Esquece", ml:"300ml"},{hour:"18:20Hrs", messageToDrink:"Não Esquece", ml:"300ml"}])
 
   function addML(quantity: number){
     let afterQuantity = data[0] + quantity;
@@ -37,6 +38,19 @@ export default function Home() {
     }else{
       setData([data[0]+quantity])
     }
+  }
+
+  function addCard(info: any, index: number){
+    return(<View style={styles.cardBody}  key={index}>
+            <View style={{width:10, height:10, backgroundColor:'white', borderRadius:10/2}}></View>
+            <View>
+              <Text style={styles.textoCard}>{info.hour}</Text>
+              <Text style={styles.subTextoCard}>{info.messageToDrink}</Text>
+            </View>
+            <View>
+            <Text style={{fontSize:20, color:'#716f6f'}}>{info.ml}</Text>
+            </View>
+          </View>);
   }
 
   return (
@@ -69,28 +83,10 @@ export default function Home() {
       </View>
       <View style={styles.bottomContainer}>
       <ScrollView style={{ flex: 1}}>
-        <View style={styles.cardBody}>
-          <View style={{width:10, height:10, backgroundColor:'white', borderRadius:10/2}}></View>
-          <View>
-            <Text style={styles.textoCard}>18:20Hrs</Text>
-            <Text style={styles.subTextoCard}>Não Esquece</Text>
-          </View>
-          <View>
-          <Text style={{fontSize:20, color:'#716f6f'}}>300ML</Text>
-          </View>
-        </View>
-        <View style={styles.cardBody}>
-          <View style={{width:10, height:10, backgroundColor:'white', borderRadius:10/2}}></View>
-          <View>
-            <Text style={styles.textoCard}>18:20Hrs</Text>
-            <Text style={styles.subTextoCard}>Não Esquece</Text>
-          </View>
-          <View>
-          <Text style={{fontSize:20, color:'#716f6f'}}>300ML</Text>
-          </View>
-        </View>
-    
-        </ScrollView>
+        {quantityOfCups.map((e,index) => {
+         return addCard(e, index);
+        })}
+      </ScrollView>
       </View>
       <View style={styles.announcementContainer}></View>
     </View>
