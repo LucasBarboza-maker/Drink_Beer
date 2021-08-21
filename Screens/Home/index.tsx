@@ -1,5 +1,7 @@
 import React from 'react';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import saveinfo from '../../Utils/save';
+import getInfo from '../../Utils/load';
 import { StyleSheet, Text, View, Image, Dimensions, ScrollView, Pressable} from 'react-native';
 import {
   LineChart,
@@ -28,11 +30,34 @@ const chartConfig = {
 export default function Home() {
   
   const [data, setData] = useState([1]);
-  const [quantityOfCups, setQuantityOfCups] = useState([{radiusColor:'green',hour:"18:20Hrs", messageToDrink:"Não Esquece", ml:"300ml"},{radiusColor:'white',hour:"18:20Hrs", messageToDrink:"Não Esquece", ml:"300ml"}])
+  const [quantityOfCups, setQuantityOfCups] = useState([{radiusColor:'white',hour:currentDateFormatToCard(), messageToDrink:"Não Esquece", ml:"300ml", radiusPercentage:0.1}])
+
+  useEffect(() => {
+    getInfo('cups1').then(e => {
+      setQuantityOfCups(e)
+    });
+    
+    
+  }, [])
+
+  useEffect(() => {
+    saveinfo('cups1',quantityOfCups);
+    var ringPercentage = 0;
+    quantityOfCups.map(e => {
+      ringPercentage += e.radiusPercentage;
+    });
+    setData([ringPercentage])
+    console.log("mudouiasd")
+  }, [quantityOfCups])
 
   function currentDateFormatToCard(){
     let date = new Date();
-    let formattedDate = date.getHours()+":"+date.getMinutes()+"Hrs";
+    let formattedDate = "";
+    if(date.getHours() <= 9){
+      formattedDate = date.getHours()+":0"+date.getMinutes()+"Hrs";
+      return formattedDate;
+    }
+    formattedDate = date.getHours()+":"+date.getMinutes()+"Hrs";
     return formattedDate;
   }
 
@@ -44,10 +69,17 @@ export default function Home() {
     }else{
       setData([data[0]+quantity])
     }
-    quantityOfCups.map(e => {
-     return e.radiusColor = 'white';
-    })
-    setQuantityOfCups([{radiusColor:'green',hour:currentDateFormatToCard(), messageToDrink:"Não Esquece", ml:"300ml"},...quantityOfCups])
+    if(quantityOfCups.length > 0){
+      quantityOfCups.map(e => {
+        if(e.radiusColor != undefined){
+          return e.radiusColor = 'white';
+        }
+      })
+    }
+   
+    setQuantityOfCups([{radiusColor:'green',hour:currentDateFormatToCard(), messageToDrink:"Não Esquece", ml:"300ml", radiusPercentage:quantity},...quantityOfCups])
+    
+
   }
 
   function addCard(info: any, index: number){
@@ -85,7 +117,7 @@ export default function Home() {
             />
         <View style={styles.middleCircle}>
           <Image source={require('../../Images/glasses/default_beer.png')} style={{width:'45%', height:'45%', resizeMode:'contain'}}/>
-          <Pressable style={styles.bellowMiddleCircle} onPress={() => {addML(0.1)}}>
+          <Pressable style={styles.bellowMiddleCircle} onPress={() => {addML(0.03)}}>
             <Text style={styles.textoML}>300ML</Text>
             <Text style={styles.textoPlus}>+</Text>
           </Pressable>
