@@ -29,6 +29,15 @@ export default function Home() {
   
   const [data, setData] = useState([1]);
 
+  function addML(quantity: number){
+    let afterQuantity = data[0] + quantity;
+    if(afterQuantity > 1 ){
+      afterQuantity = afterQuantity-1;
+      setData([afterQuantity])
+    }else{
+      setData([data[0]+quantity])
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -52,7 +61,7 @@ export default function Home() {
             />
         <View style={styles.middleCircle}>
           <Image source={require('../../Images/glasses/default_beer.png')} style={{width:'45%', height:'45%', resizeMode:'contain'}}/>
-          <Pressable style={styles.bellowMiddleCircle} onPress={() => {setData([data[0]+0.3])}}>
+          <Pressable style={styles.bellowMiddleCircle} onPress={() => {addML(0.1)}}>
             <Text style={styles.textoML}>300ML</Text>
             <Text style={styles.textoPlus}>+</Text>
           </Pressable>
