@@ -28,14 +28,6 @@ export default function Statistics() {
 
   const [quantityOfCups, setQuantityOfCups] = useState([{radiusColor:'white',hour:currentDateFormatToCard(), messageToDrink:"Não Esquece", ml:"300ml", radiusPercentage:0.1}])
 
-  
-  useEffect(() => {
-    getInfo('cups1').then(e => {
-      setQuantityOfCups(e)
-    });
-    
-    
-  }, [])
 
   function currentDateFormatToCard(){
     let date = new Date();

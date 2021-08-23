@@ -30,24 +30,31 @@ const chartConfig = {
 export default function Home() {
   
   const [data, setData] = useState([1]);
-  const [quantityOfCups, setQuantityOfCups] = useState([{radiusColor:'white',hour:currentDateFormatToCard(), messageToDrink:"Não Esquece", ml:"300ml", radiusPercentage:0.1}])
+  const [quantityOfCups, setQuantityOfCups] = useState([{radiusColor:'white',hour:currentDateFormatToCard(), messageToDrink:"Não Esquece", ml:"300ml", radiusPercentage:0.1, default:true}])
 
   useEffect(() => {
-    getInfo('cups1').then(e => {
-      setQuantityOfCups(e)
+    setQuantityOfCups(quantityOfCups.filter(e => {
+      if(e.default==false || e.default == undefined){
+        return e;
+      }
+    }));
+
+    getInfo('cups4'+currentDateFormat()).then(e => {
+      if(e != null){
+        setQuantityOfCups(e)
+      }
     });
     
     
   }, [])
 
   useEffect(() => {
-    saveinfo('cups1',quantityOfCups);
+    saveinfo('cups4'+currentDateFormat(),quantityOfCups);
     var ringPercentage = 0;
     quantityOfCups.map(e => {
       ringPercentage += e.radiusPercentage;
     });
     setData([ringPercentage])
-    console.log("mudouiasd")
   }, [quantityOfCups])
 
   function currentDateFormatToCard(){
@@ -58,6 +65,14 @@ export default function Home() {
       return formattedDate;
     }
     formattedDate = date.getHours()+":"+date.getMinutes()+"Hrs";
+    return formattedDate;
+  }
+
+  function currentDateFormat(){
+    let date = new Date();
+    let formattedDate = "";
+    formattedDate = date.getDate()+""+date.getMonth()+""+date.getFullYear();
+
     return formattedDate;
   }
 
@@ -125,9 +140,14 @@ export default function Home() {
       </View>
       <View style={styles.bottomContainer}>
       <ScrollView style={{ flex: 1}}>
-        {quantityOfCups.map((e,index) => {
+        {quantityOfCups ? 
+        quantityOfCups.map((e,index) => {
          return addCard(e, index);
-        })}
+        }):
+        <View style={styles.cardBody}>
+            <Text style={styles.textoCard}>Ainda Sóbrio,que pena</Text>
+        </View>
+        }
       </ScrollView>
       </View>
       <View style={styles.announcementContainer}></View>
