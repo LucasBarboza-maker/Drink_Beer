@@ -1,10 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
+import {useEffect, useState} from 'react';
+import saveinfo from '../../Utils/save';
+import getInfo from '../../Utils/load';
 import { StyleSheet, Text, View } from 'react-native';
 import {
   LineChart,
-  ProgressChart,
-
+  ContributionGraph
 } from "react-native-chart-kit";
 
 import { Dimensions } from "react-native";
@@ -21,8 +23,31 @@ const chartConfig = {
   useShadowColorFromDataset: false // optional
 };
 
-
 export default function Statistics() {
+
+
+  const [quantityOfCups, setQuantityOfCups] = useState([{radiusColor:'white',hour:currentDateFormatToCard(), messageToDrink:"Não Esquece", ml:"300ml", radiusPercentage:0.1}])
+
+  
+  useEffect(() => {
+    getInfo('cups1').then(e => {
+      setQuantityOfCups(e)
+    });
+    
+    
+  }, [])
+
+  function currentDateFormatToCard(){
+    let date = new Date();
+    let formattedDate = "";
+    if(date.getHours() <= 9){
+      formattedDate = date.getHours()+":0"+date.getMinutes()+"Hrs";
+      return formattedDate;
+    }
+    formattedDate = date.getHours()+":"+date.getMinutes()+"Hrs";
+    return formattedDate;
+  }
+  
 
   const dataLine = {
     labels: ["Janeiro 1º", "Janeiro 2°", "Janeiro 3°", "Janeiro 4°", "Fevereiro 1ª"],
@@ -36,34 +61,42 @@ export default function Statistics() {
     legend: ["Litroes por Semana"] // optional
   };
 
-  const dataProgress = {
-    labels: ["Manha", "Tarde", "Noite"], // optional
-    data: [0.4, 0.6, 0.8]
-  };
-
+  const commitsData = [
+    { date: '2017-01-02', count: 1 },
+    { date: '2017-01-03', count: 2 },
+    { date: '2017-01-04', count: 3 },
+    { date: '2017-01-05', count: 4 },
+    { date: '2017-01-06', count: 5 },
+    { date: '2017-01-30', count: 2 },
+    { date: '2017-01-31', count: 3 },
+    { date: '2017-03-01', count: 2 },
+    { date: '2017-04-02', count: 4 },
+    { date: '2017-03-05', count: 2 },
+    { date: '2017-02-30', count: 4 }
+  ]
   
   return (
     <View style={styles.container}>
 
     <Text style={{fontSize:20}}>Consumo diário</Text>
-    <ProgressChart
-      data={dataProgress}
-      width={screenWidth}
-      height={220}
-      strokeWidth={16}
-      radius={32}
-      chartConfig={chartConfig}
-      hideLegend={false}
-    />
-
-<Text style={{fontSize:20}}>Consumo Mensal</Text>
-      <StatusBar style="auto" />
+    <StatusBar style="auto" />
       <LineChart
         data={dataLine}
         width={screenWidth}
         height={220}
         chartConfig={chartConfig}
       />
+
+    <Text style={{fontSize:20}}>Consumo Mensal</Text>
+    <ContributionGraph
+      values={commitsData}
+      endDate={new Date('2017-04-01')}
+      numDays={105}
+      width={screenWidth}
+      height={220}
+      chartConfig={chartConfig}
+    />
+      
     </View>
   );
 }
