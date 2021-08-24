@@ -60,7 +60,7 @@ export default function Home() {
   function currentDateFormatToCard(){
     let date = new Date();
     let formattedDate = "";
-    if(date.getHours() <= 9){
+    if(date.getMinutes() <= 9){
       formattedDate = date.getHours()+":0"+date.getMinutes()+"Hrs";
       return formattedDate;
     }
@@ -92,7 +92,7 @@ export default function Home() {
       })
     }
    
-    setQuantityOfCups([{radiusColor:'green',hour:currentDateFormatToCard(), messageToDrink:"Não Esquece", ml:"300ml", radiusPercentage:quantity},...quantityOfCups])
+    setQuantityOfCups([{radiusColor:'green',hour:currentDateFormatToCard(), messageToDrink:"Não Esquece", ml:"300ml", radiusPercentage:quantity, default:false},...quantityOfCups])
     
 
   }
@@ -145,8 +145,15 @@ export default function Home() {
          return addCard(e, index);
         }):
         <View style={styles.cardBody}>
-            <Text style={styles.textoCard}>Ainda Sóbrio,que pena</Text>
-        </View>
+            <View style={{width:10, height:10, backgroundColor:'red', borderRadius:10/2}}></View>
+            <View>
+              <Text style={styles.textoCard}>22</Text>
+              <Text style={styles.subTextoCard}>22</Text>
+            </View>
+            <View>
+            <Text style={{fontSize:20, color:'#716f6f'}}>300ml</Text>
+            </View>
+          </View>
         }
       </ScrollView>
       </View>
