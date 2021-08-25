@@ -39,7 +39,7 @@ export default function Home() {
       }
     }));
 
-    getInfo('cups4'+currentDateFormat()).then(e => {
+    getInfo('cups6'+currentDateFormat()).then(e => {
       if(e != null){
         setQuantityOfCups(e)
       }
@@ -49,7 +49,7 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    saveinfo('cups4'+currentDateFormat(),quantityOfCups);
+    saveinfo('cups6'+currentDateFormat(),quantityOfCups);
     var ringPercentage = 0;
     quantityOfCups.map(e => {
       ringPercentage += e.radiusPercentage;
@@ -110,6 +110,19 @@ export default function Home() {
           </View>);
   }
 
+  function checkIfItsEmptyOfCards(){
+     
+    if(quantityOfCups.length > 0){
+      quantityOfCups.map((e,index) => {
+       return addCard(e, index);
+      });
+    } 
+    return(
+          <Text style={{textAlign: 'center', width:'100%', fontSize:20, marginTop:20}}>Está sóbrio? que pena</Text>
+    );
+    }
+  
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -140,21 +153,7 @@ export default function Home() {
       </View>
       <View style={styles.bottomContainer}>
       <ScrollView style={{ flex: 1}}>
-        {quantityOfCups ? 
-        quantityOfCups.map((e,index) => {
-         return addCard(e, index);
-        }):
-        <View style={styles.cardBody}>
-            <View style={{width:10, height:10, backgroundColor:'red', borderRadius:10/2}}></View>
-            <View>
-              <Text style={styles.textoCard}>22</Text>
-              <Text style={styles.subTextoCard}>22</Text>
-            </View>
-            <View>
-            <Text style={{fontSize:20, color:'#716f6f'}}>300ml</Text>
-            </View>
-          </View>
-        }
+        {checkIfItsEmptyOfCards()}
       </ScrollView>
       </View>
       <View style={styles.announcementContainer}></View>
