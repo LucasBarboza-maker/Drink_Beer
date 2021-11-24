@@ -1,16 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import {useEffect, useState} from 'react';
-import saveinfo from '../../Utils/save';
+import { useEffect, useState } from 'react';
+import { useIsFocused } from '@react-navigation/native';
+import { CurrentHourToCard, CurrentDateFormat } from '../../helpers/dateFormat'
+import { ReturnCommitDate, ReturnLineDate } from '../../helpers/statisticsData';
 import getInfo from '../../Utils/load';
-import { StyleSheet, Text, View } from 'react-native';
+
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import {
   LineChart,
   ContributionGraph
 } from "react-native-chart-kit";
 
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  setTestDeviceIDAsync
+} from 'expo-ads-admob';
+
 import { Dimensions } from "react-native";
 const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
 
 const chartConfig = {
   backgroundGradientFrom: "white",
@@ -25,71 +35,109 @@ const chartConfig = {
 
 export default function Statistics() {
 
-
-  const [quantityOfCups, setQuantityOfCups] = useState([{radiusColor:'white',hour:currentDateFormatToCard(), messageToDrink:"Não Esquece", ml:"300ml", radiusPercentage:0.1}])
-
-
-  function currentDateFormatToCard(){
-    let date = new Date();
-    let formattedDate = "";
-    if(date.getHours() <= 9){
-      formattedDate = date.getHours()+":0"+date.getMinutes()+"Hrs";
-      return formattedDate;
-    }
-    formattedDate = date.getHours()+":"+date.getMinutes()+"Hrs";
-    return formattedDate;
-  }
-  
-
-  const dataLine = {
-    labels: ["Janeiro 1º", "Janeiro 2°", "Janeiro 3°", "Janeiro 4°", "Fevereiro 1ª"],
+  const [loading, setLoading] = useState(true);
+  const isFocused = useIsFocused();
+  const [quantityOfCups, setQuantityOfCups] = useState([{ radiusColor: 'white', hour: CurrentHourToCard(), cardDate: CurrentDateFormat(), messageToDrink: "Não Esquece", ml: "300ml", radiusPercentage: 0.1, default: true }])
+  const [commitData, setCommitData] = useState([{ date: "", count: 0 }])
+  const [lineData, setLineData] = useState({
+    labels: [],
     datasets: [
       {
-        data: [20, 15, 13, 25, 13],
-        color: (opacity = 1) => `rgba(254, 30, 30, ${opacity})`, // optional
-        strokeWidth: 4 // optional
+        data: [],
+        color: (opacity = 1) => `rgba(254, 30, 30, ${opacity})`,
+        strokeWidth: 4
       }
     ],
-    legend: ["Litroes por Semana"] // optional
-  };
+    legend: ["Litros por Semana"]
+  })
 
-  const commitsData = [
-    { date: '2017-01-02', count: 1 },
-    { date: '2017-01-03', count: 2 },
-    { date: '2017-01-04', count: 3 },
-    { date: '2017-01-05', count: 4 },
-    { date: '2017-01-06', count: 5 },
-    { date: '2017-01-30', count: 2 },
-    { date: '2017-01-31', count: 3 },
-    { date: '2017-03-01', count: 2 },
-    { date: '2017-04-02', count: 4 },
-    { date: '2017-03-05', count: 2 },
-    { date: '2017-02-30', count: 4 }
-  ]
-  
+  useEffect(() => {
+    setLoading(true);
+    setQuantityOfCups(quantityOfCups.filter(e => {
+      if (e.default == false || e.default == undefined) {
+        return e;
+      }
+    }));
+
+    getInfo('drinks').then(e => {
+      if (e != null) {
+        setQuantityOfCups(e)
+        setCommitData(ReturnCommitDate(e))
+        setLineData(ReturnLineDate(e))
+      }
+    }).then(() => {
+      setLoading(false);
+    })
+
+    loadAd();
+
+  }, [isFocused])
+
+  async function loadAd() {
+    var RandomNumber = Math.floor(Math.random() * 100) + 1;
+    if (RandomNumber > 70) {
+      AdMobInterstitial.setAdUnitID('ca-app-pub-3940256099942544/1033173712');
+      InterstitalAd()
+    }
+  }
+
+  async function InterstitalAd() {
+    try {
+      await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true })
+      await AdMobInterstitial.showAdAsync();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  var halfDateToContriuitorsGraph = new Date();
+  halfDateToContriuitorsGraph.setMonth(halfDateToContriuitorsGraph.getMonth() + 1);
+  const handleToolTip: any = {}
+
   return (
+    <ScrollView style={{minHeight:screenHeight, backgroundColor:'white'}}>
     <View style={styles.container}>
+      <View style={styles.announcementContainer}>
+        <AdMobBanner
+          bannerSize="largeBanner"
+          adUnitID="ca-app-pub-3940256099942544/6300978111" // Test ID, Replace with your-admob-unit-id
+          servePersonalizedAds // true or false
+          onDidFailToReceiveAdWithError={() => console.log("Erro")} />
+      </View>
+      <Text style={{ fontSize: 20 }}>Consumo diário</Text>
+      <StatusBar style="auto" />
+      {loading == false ?
+        <View style={{ minHeight: 220, width:'100%' }}>
+          <LineChart
+            data={lineData}
+            width={screenWidth}
+            height={220}
+            chartConfig={chartConfig}
+            yAxisSuffix={"L"}
+          />
+        </View>
+        :
+        <></>
+      }
 
-    <Text style={{fontSize:20}}>Consumo diário</Text>
-    <StatusBar style="auto" />
-      <LineChart
-        data={dataLine}
-        width={screenWidth}
-        height={220}
-        chartConfig={chartConfig}
-      />
-
-    <Text style={{fontSize:20}}>Consumo Mensal</Text>
-    <ContributionGraph
-      values={commitsData}
-      endDate={new Date('2017-04-01')}
-      numDays={105}
-      width={screenWidth}
-      height={220}
-      chartConfig={chartConfig}
-    />
-      
+      <Text style={{ fontSize: 20, marginTop:50 }}>Consumo Mensal</Text>
+      {loading == false ?
+        <View style={{ minHeight: 220, width:'100%' }}>
+          <ContributionGraph
+            values={commitData}
+            endDate={halfDateToContriuitorsGraph}
+            numDays={105}
+            width={screenWidth}
+            height={220}
+            chartConfig={chartConfig}
+            tooltipDataAttrs={(value) => handleToolTip}
+          />
+        </View>
+        :
+        <></>
+      }
     </View>
+    </ScrollView>
   );
 }
 
@@ -100,4 +148,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
   },
+  announcementContainer: {
+    padding: 5,
+    display: 'flex',
+    justifyContent: 'center'
+
+  }
 });
+
